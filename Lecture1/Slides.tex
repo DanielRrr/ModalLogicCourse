@@ -1,0 +1,459 @@
+\documentclass[pdf,utf8,russian,aspectratio=169]{beamer}
+\usepackage[T2A]{fontenc}
+\usetheme{Copenhagen}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz-cd}
+\usepackage[all, 2cell]{xy}
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage[all]{xy}
+\usepackage{tikz}
+\usepackage{bussproofs}
+\usepackage{dsfont}
+\usepackage{mathabx}
+\usepackage{animate}
+\usetikzlibrary{graphs}
+\usetikzlibrary{arrows}
+\usepackage{hyperref}
+\usepackage[english,russian]{babel}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[all, 2cell]{xy}
+\usepackage[all]{xy}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\newtheorem{defin}{Определение}
+\newtheorem{theor}{Теорема}
+\newtheorem{lem}{Лемма}
+\title{Введение в модальную логику, \\ Лекция 1}
+\author{Даня Рогозин \\ МГУ, Serokell}
+\date{Computer Science Club}
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+  \frametitle{Эпиграф}
+
+  \begin{center}
+    Необходимость непреклонна
+
+\vspace{\baselineskip}
+
+    Эврипид, 480-е --- 406 до н. э., \\
+    финальные слова из трагедии "Гекуба"
+  \end{center}
+  \begin{center}
+  \includegraphics[scale=0.25]{euripides.jpg}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Что такое модальная логика?}
+
+  В рамках курса мы дадим точное матетическое определение модальной логики. Пока что мы определим ее неформально.
+  Неформально, модальная логика существует в двух смыслах:
+
+  \begin{itemize}
+    \item \emph{В широком смысле}, модальная логика является ветвью неклассической логики, которая изучает
+    утверждения, дополненные специальными качествами, как доказуемость, необходимость, возможность, и так далее.
+    Здесь модальность чаще всего понимается лингвистически, то есть как фигура речи, дополняющая предложение отдельным свойством. Например, "возможно, что завтра будет дождь" или "всегда было и будет, что $2 + 2 = 4$"
+    \item \emph{В узком смысле}, под модальной логикой подразумевают конкретную логику, которая расширяет (как правило) классическую логику дополнительными модальными операторами. То есть, в узком смысле, модальная логика --- это некоторое отдельно взятое исчисление.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Очень краткая история}
+
+  \begin{itemize}
+    \item Модальности в логике изучались еще античными греками, такими как Аристотель и Диодор Хронос
+    \item В 17 веке Лейбниц предложил различать два вида истин: "истины" разума --- это те истины, которые верны всегда независимо от актуального положения дел; "истины" факта --- это истины, которые могли быть и неверны при прочем положении дел, и их "истинность" случайна
+    \item Системы с модальностями впервые стал описывать Кларенс Льюис в начале 20-го века, который ввел в оборот связки $\Box$ и $\Diamond$, обозначающие необходимость и возможность соответственно. Тогда у этих модальностей не было семантики, связки понимались интуитивно
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Очень краткая история}
+  \begin{itemize}
+  \item В 1940-е годы некоторые из систем модальной логики изучались для описания топологических и метрических пространств. Это направление берет начало в работах Тарского и Маккинси
+  \item В конце 1950-х годов Соул Крипке предложил строить реляционные модели для модальной и интуиционистской логик
+  \item 1960-е--1970-е (что верно и по сей день) модальная логика эмансипируется от своих философских корней и становится математической самостоятельной дисциплиной, что сложилось в результате исследований Сегерберга, Салквиста, Гольдблатта, Томасона, Габбая, и т. д.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Место модальной логики в общем контексте}
+
+  В математической логике можно выделить три основных раздела:
+
+  \begin{itemize}
+    \item \emph{Теория доказательств} изучает свойства и структуру логических выводов, доказуемость в тех или иных формальных
+    теориях
+    \item \emph{Теория моделей} изучает семантику логических формул и их математическую интерпретацию
+    \item \emph{Теория алгоритмов} ставит вопрос о вычислимости за конечное число шагов и о затратах ресурсов на выполнение той или иной процедуры.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Место модальной логики в общем контексте}
+  В таком делении модальная логика существует в трех испостасях:
+
+  \begin{itemize}
+    \item Синтаксис модальной логики, формулировка исчислений систем модальной логики, изучение вывода в модальной логике
+    \item С точки зрения семантики, модальная логика служит довольно удобным аппаратом для характеризации математических структур, таких, как реляционные системы и топологические пространства
+    \item С точки зрения теории алгоритмов, модальная логика изучается на предмет разрешимости и сложности вывода
+  \end{itemize}
+
+В рамках нашего курса мы будем изучать преимущественно второй и третий аспекты.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Модальный язык}
+
+  \begin{defin}
+    Пусть $\mathbb{V} = \{ p, q, r, ... \}$ счетное множество пропозициональных переменных. Множество формул $Fm$ определяется
+    индуктивно:
+
+    \begin{enumerate}
+      \item Всякая переменная --- это формула
+      \item Если $\phi$ --- это формула, то $\neg \phi$ --- это формула
+      \item Если $\phi, \psi$ --- это формулы, то $(\phi \to \psi)$, $(\phi \land \psi)$, $(\phi \lor \psi)$ --- это формулы
+      \item Если $\phi$ --- это формула, то $\Box \phi$ --- это формула
+    \end{enumerate}
+
+    По умолчанию, внешние скобки опускаются.
+
+    Также нам будет у нас будет связка $\Diamond$, которую мы введем как сокращение $\Diamond \phi = \neg \Box \neg \phi$.
+  \end{defin}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Модальный язык}
+  Связки $\neg$, $\to$, $\land$ и $\lor$ мы понимаем классически, то есть как булевы отрицание, импликация, конъюнкция и
+  дизъюнкция. Остается вопрос: как понимать $\Box$?
+
+  Существует масса способов, вот некоторые из них:
+
+  \begin{enumerate}
+    \item $\Box \phi$ --- "$\phi$ необходимо". (алетическая модальность)
+    \item $\Box \phi$ --- "$\phi$ известно". (эпистемическая модальность)
+    \item $\Box \phi$ --- "утверждение $\phi$ доказуемо в арифметической теории $T$ (например, в арифметике Пеано)"
+    \item $\Box \phi$ --- "внутренность множества $\phi$ в топологическом пространстве" (топологическая модальность, моя любимая)
+    \item $\Box \phi$ --- "всегда будет $\phi$" (временная модальность)
+  \end{enumerate}
+
+   По умолчанию, мы как правило будет работать с модальностями как с абстрактными унарными операторами, но иногда будет обращаться к пунктами 1, 3 и 4.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Шкала Крипке}
+
+  \begin{defin}
+    Шкала Крипке --- это пара $\mathcal{F} = \langle W, R \rangle$, где $W$ непустое множество, а $R \subseteq W \times W$ --- это бинарное отношение на множестве $W$
+  \end{defin}
+
+\begin{itemize}
+  \item Множество $W$ называют \emph{носителем шкалы}. Более философски, $W$ --- это множество возможных миров или положений дел. С временной точки зрения, $W$ --- это моменты времени.
+  \item Отношение $R$ часто называют \emph{отношением достижимости}. Если $x$ находится $y$ в отношении $R$, то мы будем говорить, что "$x$ видит $y$" и писать $x R y$
+  \item Можно также считать шкалу Крипке ориентированным графом, в котором $R$ --- это множество ребер в данном графе.
+\end{itemize}
+
+Также мы будет использовать обозначение $R(x) = \{ y \: | \: x R y \}$
+\end{frame}
+
+\begin{frame}
+  \frametitle{Модель Крипке}
+\begin{defin}
+  Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала Крипке. Модель Крипке --- это упорядоченная пара $\mathcal{M} = \langle \mathcal{F}, v \rangle$, где $\vartheta : \mathbb{V} \to 2^{W}$ --- это функция оценки.
+
+  Отношение истинности (также, отношение вынуждения) $\mathcal{M}, w \models \phi$ определяется индукцией по формуле $\phi$:
+
+  \begin{itemize}
+    \item $\mathcal{M}, w \models p \Leftrightarrow w \in \vartheta(p)$
+    \item $\mathcal{M}, w \models \neg \phi \Leftrightarrow \mathcal{M}, w\not\models \neg \phi$
+    \item $\mathcal{M}, w \models \phi \lor \psi \Leftrightarrow \mathcal{M}, w \models \phi \text{ или } \mathcal{M}, w \models \psi$
+    \item $\mathcal{M}, w \models \phi \land \psi \Leftrightarrow \mathcal{M}, w \models \phi \text{ и } \mathcal{M}, w \models \psi$
+    \item $\mathcal{M}, w \models \Box \phi \Leftrightarrow \forall v \:\: w R v \Rightarrow \mathcal{M}, v \models \phi$
+  \end{itemize}
+\end{defin}
+
+Из этого определения легко получить отношения истинности для импликации и ромба.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Модель Крипке}
+
+  Неформально прокомментируем условие:
+  \begin{itemize}
+  \item $\mathcal{M}, w \models \Box \phi \Leftrightarrow \forall v \:\: w R v \Rightarrow \mathcal{M}, v \models \phi$
+  \end{itemize}
+
+  Здесь бокс удобнее всего читать через необходимость.
+
+  Утверждение $\Box \phi$ истинно в мире $w$, если в любом мире $v$, достижимом из $w$, истинна формула $\phi$. То есть, $\phi$ истинно с необходимостью при положении дел $w$, если при любом развитии событий $v$, к которому можно прийти из $w$, утверждение $\phi$ будет истинно.
+
+  \xymatrix{
+  &&&& v_1 \models \phi \\
+  &&& v_4 \models \phi & w \ar[u]^{R} \ar[d]_{R} \ar[l]_{R} \ar[r]^{R} \models \Box \phi & v_2 \models \phi \\
+  &&&& v_3 \models \phi
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{Пример модели Крипке}
+
+\xymatrix{
+&&&&&&& b \ar[dd]^{R} \ar@(ul,ur)^{R} \\
+&&&&& a \ar[urr]^{R} \ar[drr]_{R} \\
+&&&&&&& c \ar@(dr,dl)^{R} \\
+}
+
+Пусть $\vartheta(p) = \{ a, b, c \}$ и $\vartheta(q) = \{ b \}$.
+
+Тогда
+\begin{enumerate}
+\item $a \models \Box p, \Box p \to \Box \Box p, \Diamond p \to \Diamond \Box p$.
+\item $b \models \Box p \to p, \Box q \to q$
+\item $c \models \Box p \to p$
+\item $\mathcal{M} \models \Box p \to \Diamond p$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Общезначимость в модели и истинность в шкале}
+
+  \begin{defin}
+    Формула $\phi$ \emph{истинна в модели} $\mathcal{M}$, если для любой точки $w \in W$, $\mathcal{M}, w \models \phi$.
+    Кратко, $\mathcal{M} \models \phi$.
+  \end{defin}
+
+  \begin{defin}
+    Формула $\phi$ \emph{истинна в шкале} $\mathcal{F}$, если для любой оценки $\vartheta$, в любой модели $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$ формула $\phi$ истинна, то есть $\mathcal{M} \models \phi$.
+
+    Обозначение $\mathcal{F} \models \phi$
+  \end{defin}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Логика класса шкал}
+
+  \begin{defin}
+    Пусть $\mathcal{F}$ --- это шкала Крипке. \emph{Логика} шкалы $\mathcal{F}$ называется множество формул, истинных в данной шкале. Обозначение $Log(\mathcal{F}) = \{ \phi \in Fm \: | \: \mathcal{F} \models \phi \}$
+  \end{defin}
+
+  \begin{defin}
+    Пусть $\mathbb{F}$ --- это класс шкал. \emph{Логикой класса шкал} $\mathbb{F}$ называется множество формул, истинных в каждой из шкал в данном классе. Обозначение $Log(\mathbb{F}) = \bigcap \limits_{\mathcal{F} \in \mathbb{F}} Log(\mathcal{F})$.
+  \end{defin}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Операции над моделями и шкалами. $p$-морфизм шкал}
+  \begin{defin} Ограниченным морфизмом шкал называется отображение $f : \mathcal{F}_1 \to \mathcal{F}_2$, такое что:
+    \begin{enumerate}
+      \item $f$ --- монотонно, $a R_1 b \Rightarrow f (a) R_2 f (b)$, где $a, b \in W_1$
+      \item $f$ обладает свойством поднятия, то есть, $f(a) R_2 c \Rightarrow \exists b \in W_1 \: a R_1 b \: \& \: f(b) = c$:
+      \begin{small}
+      \xymatrix{
+      &&&& a \ar@{|->}[d] \ar@{-->}[rr]^{R_1} && \exists b \ar@{|-->}[d] \\
+      &&&& f(a) \ar[rr]_{R_2} && c
+      }
+    \end{small}
+  \end{enumerate}
+
+  Ограниченный морфизм $f : \mathcal{F}_1 \to \mathcal{F}_2$ называется $p$-морфизмом, если $f$ сюръективно, то есть $\forall y \in \mathcal{F}_2 \: \exists x \in \mathcal{F}_1 \:\: f(x) = y$. Обозначение $f : \mathcal{F}_1 \twoheadrightarrow \mathcal{F}_2$.
+  \end{defin}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Операции над моделями и шкалами. $p$-морфизм шкал}
+  \begin{defin}
+    Органиченным морфизмом моделей Крипке $f : \mathcal{M}_1 = \langle \mathcal{F}_1, \vartheta_1 \rangle \to \mathcal{M}_2 \langle \mathcal{F}_2, \vartheta_2 \rangle$ называется ограниченный морфизм шкал $f : \mathcal{F}_1 \to \mathcal{F}_2$ со следующим условием:
+
+    \begin{center}
+      $\mathcal{M}_1, w \models p \Leftrightarrow \mathcal{M}_1, f(w) \models p$, для всех $w \in \mathcal{M}_1$, где $p$ --- это переменная.
+    \end{center}
+
+    Аналогично, ограниченный морфизм моделей называется $p$-морфизмом моделей, если отображение $f$ --- сюръективно.
+  \end{defin}
+
+  Ограниченные морфизмы позволяют отображать модели и шкалы, сохраняя истинность формул. Сформулируем лемму:
+\end{frame}
+
+\begin{frame}
+  \frametitle{Операции над моделями и шкалами. Лемма о $p$-морфизмах}
+
+  \begin{lem}
+    \begin{enumerate}
+      \item Пусть $\mathcal{M}_1, \mathcal{M}_2$ --- модели Крипке и $f : \mathcal{M}_1 \to \mathcal{M}_2$. Тогда
+      $\mathcal{M}_1, w \models \phi \Leftrightarrow \mathcal{M}_2, f(w) \models \phi$
+      \item Пусть $f : \mathcal{M}_1 \twoheadrightarrow \mathcal{M}_2$. Тогда
+      $\mathcal{M}_1 \models \phi \Leftrightarrow \mathcal{M}_2 \models \phi$
+      \item Пусть $f: \mathcal{F}_1 \twoheadrightarrow \mathcal{F}_2$, тогда $Log(\mathcal{F}_1) \subseteq Log(\mathcal{F}_2)$
+    \end{enumerate}
+  \end{lem}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Операции над моделями и шкалами. Лемма о $p$-морфизмах}
+
+  Докажем первый пункт
+
+  \begin{lem}
+    Пусть $\mathcal{M}_1, \mathcal{M}_2$ --- модели Крипке и $f : \mathcal{M}_1 \to \mathcal{M}_2$. Тогда
+    $\mathcal{M}_1, w \models \phi \Leftrightarrow \mathcal{M}_2, f(w) \models \phi$
+  \end{lem}
+
+Индукция по построению формулы $\phi$. Рассмотрим случай, когда $\phi \eqcirc \Box \psi$. Покажем, что $\mathcal{M}_1, w \models \Box \psi \Leftrightarrow \mathcal{M}_2, f(w) \models \Box \psi$
+
+  \begin{proof}
+    ($\Rightarrow$) Пусть $f : \mathcal{M}_1 \to \mathcal{M}_2$. Пусть $\mathcal{M}_1, w \models \Box \psi$. Пусть $v' \in W_2$, такой, что $f(w) R_2 v'$, тогда, по свойству поднятия, найдется такой $v \in W_1$, то $w R_1 v$ и $f(v) = v'$. Так как $w R_1 v$, тогда $\mathcal{M}_1, v \models \psi$. Но по предположению индукции, $\mathcal{M}_2, f(v) \models \psi$, то есть $\mathcal{M}_2, v' \models \psi$.
+  \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Операции над моделями и шкалами. Лемма о $p$-морфизмах}
+
+  Докажем первый пункт
+
+  \begin{lem}
+    Пусть $\mathcal{M}_1, \mathcal{M}_2$ --- модели Крипке и $f : \mathcal{M}_1 \to \mathcal{M}_2$. Тогда
+    $\mathcal{M}_1, w \models \phi \Leftrightarrow \mathcal{M}_1, f(w) \models \phi$
+  \end{lem}
+
+  Индукция по построению формулы $\phi$. Рассмотрим случай, когда $\phi \eqcirc \Box \psi$. Покажем, что $\mathcal{M}_1, w \models \Box \psi \Leftrightarrow \mathcal{M}_2, f(w) \models \Box \psi$
+
+  \begin{proof}
+    ($\Leftarrow$) Пусть $\mathcal{M}_2, f(w) \models \Box \psi$. Пусть $v \in W_1$, т.ч., $w R_1 v$. По монотонности,
+    $f(w) R_2 f(v)$. Тогда $\mathcal{M}_2, f(v) \models \phi$, а также $\mathcal{M}_1, v \models \phi$ по предположению индукции. Тогда $\mathcal{M}_1, w \models \Box \psi$.
+  \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Операции над моделями и шкалами. Лемма о $p$-морфизмах}
+
+  Доказательство второго пунтка
+
+  \begin{lem}
+    Пусть $f : \mathcal{M}_1 \twoheadrightarrow \mathcal{M}_2$. Тогда $\mathcal{M}_1 \models \phi \Leftrightarrow \mathcal{M}_2 \models \phi$
+  \end{lem}
+
+  \begin{proof}
+    ($\Rightarrow$) Пусть $\mathcal{M}_1 \models \phi$ и $w' \in W_2$. Так как $f$ сюръективно, найдется такой $w \in W_1$,
+    что $f(w) = w'$. Так как $\mathcal{M}_1 \models \phi$, то $\mathcal{M}_1, w \models \phi$, тогда по предыдущему пункту
+    $\mathcal{M}_2, f(w) \models \phi$, то есть, $\mathcal{M}_2, w' \models \phi$
+
+
+    ($\Leftarrow$) Пусть $\mathcal{M}_2 \models \phi$, тогда $\mathcal{M}_2, f(w) \models \phi$, и по первому пункту, $\mathcal{M}_1, w \models \phi$
+  \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Операции над моделями и шкалами. Лемма о $p$-морфизмах}
+
+  \begin{lem}
+    Пусть $f: \mathcal{F}_1 \twoheadrightarrow \mathcal{F}_2$, тогда $Log(\mathcal{F}_1) \subseteq Log(\mathcal{F}_2)$
+  \end{lem}
+
+  \begin{proof}
+    Пусть $\mathcal{F}_1 \models \phi$. Пусть $\mathcal{M}_2 = \langle \mathcal{F}_2, \vartheta_2 \rangle$ --- модель на шкале
+    $\mathcal{F}_2$. Посмотрим модель $\mathcal{M}_1 = \langle \mathcal{F}_1, \vartheta_1 \rangle$ и положим $\mathcal{M}_1, w
+    \models p \Leftrightarrow \mathcal{M}_1, f(w) \models p$. Тогда $\mathcal{M}_1 \twoheadrightarrow \mathcal{M}_2$ и, по
+    предыдущему пункту, $\mathcal{M}_2 \models \phi$.
+  \end{proof}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Операции над моделями и шкалами. Порожденная подмодель}
+
+  \begin{defin} Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала Крипке и
+  $V \subseteq W$ --- это непустое подмножество $W$. Тогда сужение шкалы --- это шкала
+  $\mathcal{F} \upharpoonright V = \langle V, R \upharpoonright V \rangle$, где $R \upharpoonright V = R \cap V \times V$.
+
+  \end{defin}
+
+  \begin{defin}
+    Пусть $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$ --- это модель Крипке и $V \subseteq W$ --- это непустое подмножество $W$. Тогда сужение модели на $V$ --- это мдель $\mathcal{M} \upharpoonright V = \langle \mathcal{F} \upharpoonright V, \vartheta' \rangle$, где $\mathcal{F} \upharpoonright V$ --- это сужение шкалы на $V$ и $\vartheta'(p) = \vartheta(p) \cap V$ для каждой переменной $p$.
+  \end{defin}
+
+  Подмножество $V$ $R$-замкнуто, если $x \in V$ и $x R y$ влечет $y \in V$. В таком случае сужение модели и шкалы называются порожденными подшкалой и подмоделью.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Операции над моделями и шкалами. Лемма о порожденной подмодели}
+
+\begin{lem} Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала и $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$
+  --- это модель Крипке. Пусть также $V \subseteq W$ $R$-замкнуто, тогда
+  \begin{enumerate}
+    \item Если $w \in V$, тогда $\mathcal{M}, w \models \phi \Leftrightarrow \mathcal{M} \upharpoonright V, w \models \phi $
+    \item $Log(\mathcal{F}) \subseteq Log(\mathcal{F} \upharpoonright V)$
+  \end{enumerate}
+\end{lem}
+
+Докажем первый пункт
+
+\begin{proof}
+  ($\Rightarrow$) Пусть $\mathcal{M}, w \models \Box \phi$, так как $w \in V$ и $V$ $R$-замкнуто, для любого $v \in R(w)$,
+  $\langle w, v \rangle \in R \upharpoonright V$. По предположению индукции, $\mathcal{M} \upharpoonright V, v \models \phi$.
+  Тогда $\mathcal{M} \upharpoonright V, w \models \Box \phi$.
+\end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Операции над моделями и шкалами. Лемма о порожденной подмодели}
+
+\begin{lem} Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала и $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$
+  --- это модель Крипке. Пусть также $V \subseteq W$ $R$-замкнуто, тогда
+  \begin{enumerate}
+    \item Если $w \in V$, тогда $\mathcal{M}, w \models \phi \Leftrightarrow \mathcal{M} \upharpoonright V, w \models \phi $
+    \item $Log(\mathcal{F}) \subseteq Log(\mathcal{F} \upharpoonright V)$
+  \end{enumerate}
+\end{lem}
+
+Докажем первый пункт
+
+\begin{proof}
+  ($\Leftarrow$) Пусть $\mathcal{M} \upharpoonright V, w \models \Box \phi$.
+  Тогда $\mathcal{M} \upharpoonright V, v \models \phi$ и $\langle w, v \rangle \in R \upharpoonright V$ для любого $v$.
+  По предположению индукции, $\mathcal{M}, v \models \phi$, тогда $\mathcal{M}, w \models \Box \phi$
+\end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Операции над моделями и шкалами. Лемма о порожденной подмодели}
+
+\begin{lem} Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала и $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$
+  --- это модель Крипке. Пусть также $V \subseteq W$ $R$-замкнуто, тогда
+  \begin{enumerate}
+    \item Если $w \in V$, тогда $\mathcal{M}, w \models \phi \Leftrightarrow \mathcal{M} \upharpoonright V, w \models \phi $
+    \item $Log(\mathcal{F}) \subseteq Log(\mathcal{F} \upharpoonright V)$
+  \end{enumerate}
+\end{lem}
+
+Докажем второй пункт
+\begin{proof} Предположим $\mathcal{F} \upharpoonright V\not\models \phi$. Тогда найдется модель $\mathcal{M}_2 = \langle
+\mathcal{F} \upharpoonright V, \vartheta' \rangle$ и $w \in W$, такие, что $\mathcal{M}_2, w\not\models \phi$, тогда
+$\mathcal{M}_2, w \models \neg\phi$. Рассмотрим модель $\mathcal{M}_1 = \langle \mathcal{F}, \vartheta \rangle$ для $\vartheta(p) = \vartheta'(p)$ для всех переменных $p$. По предыдущему пункту, $\mathcal{M}_1, w \models \neg\phi$, тогда
+$\mathcal{M}_1, w\not\models \phi$.
+\end{proof}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{На следующей лекции мы}
+
+  \begin{enumerate}
+    \item Введем понятие (нормальной) модальной логики
+    \item Введем понятие полной по Крипке логики
+    \item Докажем теорему корректности, которая утверждает, что логика произвольного класса шкал является модальной логикой
+    \item Сформулируем минимальную нормальную модальную логику, систему ${\bf K}$
+    \item Докажем теорему полноты для ${\bf K}$: минимальная нормальная модальная логика является логикой класса всех шкал
+    \item Рассмотрим примеры модальных формул, охарактеризуем соответствующие им свойства шкал и опишем стандартный "зоопарк"
+    модальных логик: системы ${\bf T}$, ${\bf K4}$, ${\bf S}4$, ${\bf S}5$, ${\bf D}$, ${\bf GL}$, ${\bf Grz}$, и так далее.
+  \end{enumerate}
+\end{frame}
+
+\end{document}
