@@ -1,0 +1,510 @@
+\documentclass[pdf,utf8,russian,aspectratio=169]{beamer}
+\usepackage[T2A]{fontenc}
+\usetheme{Copenhagen}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz-cd}
+\usepackage[all, 2cell]{xy}
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage[all]{xy}
+\usepackage{tikz}
+\usepackage{bussproofs}
+\usepackage{dsfont}
+\usepackage{mathabx}
+\usepackage{animate}
+\usetikzlibrary{graphs}
+\usetikzlibrary{arrows}
+\usepackage{hyperref}
+\usepackage[english,russian]{babel}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[all, 2cell]{xy}
+\usepackage[all]{xy}
+\usepackage{listings}
+\usepackage{mathrsfs}
+\newtheorem{defin}{Определение}
+\newtheorem{theor}{Теорема}
+\newtheorem{lem}{Лемма}
+\newtheorem{prop}{Предложение}
+\newtheorem{col}{Следствие}
+\title{Введение в модальную логику, \\ Лекция 3}
+\author{Даня Рогозин \\ МГУ, Serokell}
+\date{Computer Science Club}
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+  \frametitle{На прошлой лекции мы}
+
+  \begin{itemize}
+    \item Ввели понятие нормальной модальной логики и сформулировали минимальную нормальную модальную логику, логику ${\bf K}$
+    \item Ввели каноническую модель, доказали лемму Линденбаума и лемму о канонической модели
+    \item Показали, что ${\bf K}$ является логикой классой шкал
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Модальные формулы и свойства шкал}
+
+  Можно исследовать взаимосвязи общезначимости тех или иных формул со свойствами шкал, на которых данные формулы общезначимы. Введем следующие формулы:
+
+  \begin{itemize}
+    \item {\bf AT} $\Box p \to p$ (рефлексивность)
+    \item {\bf A4} $\Box p \to \Box \Box p$ (транзитивность)
+    \item {\bf AB} $p \to \Box \Diamond p$ (симметричность)
+    \item {\bf ACR} $\Diamond \Box p \to \Box \Diamond p$ (формула Черча-Россера)
+    \item {\bf AD} $\Diamond \top$ (сериальность)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Модальные формулы и свойства шкал}
+
+    \begin{lem} Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала Крипке, тогда
+      \begin{enumerate}
+        \item $\mathcal{F} \models \Box p \to p \Leftrightarrow \forall x \in W \:\: x R x$
+        \item $\mathcal{F} \models \Box p \to \Box \Box p \Leftrightarrow \forall x, y, z \in W \:\: x R y \: \& \: y R z \Rightarrow x R z$
+        \item $\mathcal{F} \models p \to \Box \Diamond p \Leftrightarrow \forall x, y \in W \:\: x R y \Rightarrow y R x$
+        \item $\mathcal{F} \models \Diamond \Box p \to \Box \Diamond p \Leftrightarrow
+        \forall x, y, z \in W \:\: x R y \: \& \: x R z \Rightarrow \exists z_1 \in W \: y R z_1 \: \& \: z R z_1$
+        \item $\mathcal{F} \models \Diamond \top \Leftrightarrow \forall x \in W \: \exists y \in W \:\: x R y$
+      \end{enumerate}
+    \end{lem}
+
+    \begin{proof}
+      Рассмотрим эквивалентности (1) и (2).
+    \end{proof}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Модальные формулы и свойства шкал}
+    \begin{lem} Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала Крипке, тогда
+
+      $\mathcal{F} \models \Box p \to p \Leftrightarrow \forall x \in W \:\: x R x$
+    \end{lem}
+
+    Для удобства перепишем эту формулу в эквивалентный вид $p \to \Diamond p$.
+
+    \begin{proof}
+      $(\Rightarrow)$ Пусть $\mathcal{F} \models p \to \Diamond p$. Рассмотрим оценку $\vartheta(p) = \{ x \}$, где $x \in W$.
+      Тогда $\mathcal{M}, x \models p$ и $\mathcal{M}, x \models \Diamond p$. Тогда найдется $y \in R(x)$, такой, что $\mathcal{M}, y \models p$.
+      Но $p$ истинно только в $x$, тогда $x R x$
+    \end{proof}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Модальные формулы и свойства шкал}
+    \begin{lem} Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала Крипке, тогда
+
+      $\mathcal{F} \models \Box p \to p \Leftrightarrow \forall x \in W \:\: x R x$
+    \end{lem}
+
+    \begin{proof}
+      $(\Leftarrow)$ Пусть $\mathcal{F} = \langle W, R \rangle$ рефлексивная шкала и $\mathcal{F} \not\models p \to \Diamond p$.
+      Тогда найдется такая оценка $\vartheta$, модель $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$ и $x \in W$, что
+      $\mathcal{M}, x \models p$ и $\mathcal{M}, x \not\models \Diamond p$. Из $\mathcal{M}, x \not\models \Diamond p$ следует, что для любого
+      $y \in R(x)$, $\mathcal{M}, y \not\models p$. Так как $\mathcal{F}$ рефлексивная шкала, тогда $x R x$ и $x \in R(x)$, тогда $\mathcal{M}, x \not\models p$. Противоречие.
+    \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Модальные формулы и свойства шкал}
+
+  \begin{lem} Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала Крипке, тогда
+
+    $\mathcal{F} \models \Box p \to \Box \Box p \Leftrightarrow \forall x, y, z \in W \:\: x R y \: \& \: y R z \Rightarrow x R z$
+  \end{lem}
+
+  Аналогично, перепишем формулу как $\Diamond \Diamond p \to \Diamond p$
+
+\begin{proof}
+  ($\Rightarrow$) Пусть $\mathcal{F} \models \Diamond \Diamond p \to \Diamond p$ и $x, y, z \in W$, такие, что $x R y$ и $y R z$. Рассмотрим оценку
+  $\vartheta(p) = \{ z \}$. Так как $x R y R z$, тогда $\mathcal{M}, x \models \Diamond \Diamond p$. Тогда $\mathcal{M}, x \models \Diamond p$.
+  Значит, найдется $x' \in R(x)$, что $\mathcal{M}, x' \models p$. Но $p$ истинно только $z$, тогда $x R z$
+\end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Модальные формулы и свойства шкал}
+
+  \begin{lem} Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала Крипке, тогда
+
+    $\mathcal{F} \models \Box p \to \Box \Box p \Leftrightarrow \forall x, y, z \in W \:\: x R y \: \& \: y R z \Rightarrow x R z$
+  \end{lem}
+
+\begin{proof} Пусть $\mathcal{F} = \langle W, R \rangle$ --- это транзитивная шкала,
+  $\vartheta$ --- это оценка, модель $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$ и $x \in W$. Пусть $\mathcal{M}, x \models \Diamond \Diamond p$. Тогда
+  найдется $y \in R(x)$, что $\mathcal{M}, y \models \Diamond p$, откуда $\mathcal{M}, z \models p$ для некоторого $z \in R(x)$. $x R y$ и $y R z$, тогда $x R z$,
+  значит $\mathcal{M}, x \models \Diamond p$.
+\end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Модальные логики}
+
+  Вернемся к списку формул:
+
+  \begin{itemize}
+    \item {\bf AT} $\Box p \to p$ (рефлексивность)
+    \item {\bf A4} $\Box p \to \Box \Box p$ (транзитивность)
+    \item {\bf AB} $p \to \Box \Diamond p$ (рефлексивность)
+    \item {\bf ACR} $\Diamond \Box p \to \Box \Diamond p$ (формула Черча-Россера)
+    \item {\bf AD} $\Diamond \top$ (сериальность)
+  \end{itemize}
+
+  Определим список логик:
+\end{frame}
+
+\begin{frame}
+  \frametitle{Модальные логики}
+
+  Примеры модальных логик:
+
+\begin{itemize}
+  \item ${\bf T} = {\bf K} \oplus \Box p \to p$
+  \item ${\bf K}4 = {\bf K} \oplus \Box p \to \Box \Box p$
+  \item ${\bf D} = {\bf K} \oplus \Diamond \top$
+  \item ${\bf S}4 = {\bf K}4 \oplus \Box p \to p = {\bf T} \oplus \Box p \to \Box \Box p$
+  \item ${\bf S}5 = {\bf S}4 \oplus p \to \Box \Diamond p$
+  \item ${\bf S}4.2 = {\bf S}4 \oplus \Diamond \Box p \to \Box \Diamond p$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Каноническая логика}
+
+  \begin{defin}
+    \begin{itemize}
+    \item Формула $\phi$ называется канонической, если логика $\mathcal{L} = {\bf K} \oplus \phi = Log(\mathcal{F}_{\mathcal{L}})$
+    \item Логика называется канонической, если $\mathcal{L} = Log(\mathcal{F}_{\mathcal{L}})$.
+  \end{itemize}
+  \end{defin}
+
+  \begin{prop}
+    Если логика каноническая, то она полна.
+  \end{prop}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Лемма о каноничности формул}
+  \begin{lem}
+    Следующие формулы канонические:
+    \begin{enumerate}
+      \item {\bf AT} $\Box p \to p$
+      \item {\bf A4} $\Box p \to \Box \Box p$
+      \item {\bf AB} $p \to \Box \Diamond p$
+      \item {\bf ACR} $\Diamond \Box p \to \Box \Diamond p$
+      \item {\bf AD} $\Diamond \top$
+    \end{enumerate}
+  \end{lem}
+
+  Рассмотрим случаи ${\bf A}4$, ${\bf AT}$ и ${\bf ACR}$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Лемма о каноничности формул}
+
+  \begin{lem}
+    Формула $\Box p \to \Box \Box p$ канонична, то есть $\mathcal{F}_{{\bf K} 4} \models \Box p \to \Box \Box p$.
+  \end{lem}
+
+  Снова перепишем формулу ${\bf A}4$, а отношение $R_{{\bf K} 4}$ в канонической шкале эквивалентным образом переопределим как $\Gamma R_{{\bf K}4} \Delta \Leftrightarrow \phi \in \Delta \Rightarrow \Diamond \phi \in \Gamma$
+
+  \begin{proof}
+    Пусть $\Gamma, \Delta, \Theta \in W_{{\bf K}4}$, такие что $\Gamma R_{{\bf K} 4} \Delta$ и $\Delta R_{{\bf K} 4} \Theta$. Покажем, что если $\phi \in \Theta$,
+    то $\Diamond \phi \in \Gamma$. Пусть $\phi \in \Theta$, тогда, по лемме о канонической модели, $\mathcal{M}_{{\bf K}4}, \Theta \models \phi$. Тогда
+    $\mathcal{M}_{{\bf K}4}, \Delta \models \Diamond \phi$, откуда $\mathcal{M}_{{\bf K}4}, \Gamma \models \Diamond \Diamond \phi$. С другой стороны,
+    $\mathcal{M}_{{\bf K}4}, \Gamma \models \Diamond \Diamond \phi \to \Diamond \phi$ по лемме о канонической модели.
+    Тогда $\mathcal{M}_{{\bf K}4}, \Gamma \models \Diamond \phi$, тогда $\Diamond \phi \in \Gamma$.
+  \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Лемма о каноничности формул}
+
+  \begin{lem}
+    Формула $\Box p \to p$ канонична, то есть $\mathcal{F}_{T} \models \Box p \to p$.
+  \end{lem}
+
+\begin{proof}
+  Пусть $\Gamma \in W_{\bf T}$ и $\mathcal{M}_{\bf T}, \Gamma \models p$.
+  $\mathcal{M}_{\bf T}, \Gamma \models p \to \Diamond p$ по лемме о канонической модели и
+  $\mathcal{M}_{\bf T}, \Gamma \models \Diamond p$, тогда $\Diamond p \in \Gamma$, значит, $\Gamma R_{\bf T} \Gamma$.
+\end{proof}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Лемма о каноничности формул}
+  \begin{lem}
+    Пусть $\mathcal{L} = {\bf K} + {\bf ACR}$, $\mathcal{F}_{L} \models {\bf ACR}$, где ${\bf ACR} = \Diamond \Box p \to \Box \Diamond p$
+  \end{lem}
+
+  \begin{proof}
+    Пусть $\Gamma, \Delta, \Theta \in W_{\mathcal{L}}$, такие, что $\Gamma R_{\mathcal{L}} \Delta$ и $\Gamma R_{\mathcal{L}} \Theta$.
+    Тогда $\Diamond \Delta \subseteq \Gamma$ и $\Diamond \Theta \subseteq \Gamma$. Найдем $\Xi$, такой, что
+    $\Box \Delta \subseteq \Xi$ и $\Box \Theta \subseteq \Xi$. Положим $\Xi = \Box \Delta \cup \Box \Theta$ и покажем, что
+    $\Xi$ $\mathcal{L}$-непротиворечиво.
+
+    Предположим противное, тогда найдутся такие формулы $\phi \in \Box \Delta$ и $\psi \in \Box \Theta$, что $\mathcal{L} \vdash \phi \to \neg \psi$.
+    Так как $\phi \in \Box \Delta$, тогда $\Box \phi \in \Delta$. С другой стороны, $\Diamond \Delta \subseteq \Gamma$, тогда $\Diamond \Box \phi \in \Gamma$.
+
+    $\Diamond \Box \phi \to \Box \Diamond \phi \in \Gamma$, тогда $\Box \Diamond \phi \in \Gamma$. По монотонности $\Box$ и $\Diamond$,
+    $\mathcal{L} \vdash \Box \Diamond \phi \to \Box \Diamond \neg \psi$. Тогда $\Box \Diamond \neg \psi \in \Gamma$, откуда $\Diamond \neg \psi \in \Theta$ ввиду
+    $\Gamma R_{\mathcal{L}} \Theta$, следовательно, $\neg \psi \in \Gamma$. С другой стороны, $\psi \in \Box \Theta$, тогда $\psi \in \Gamma$. Противоречие.
+  \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Лемма о каноничности логик}
+
+Вернемся к списку логик:
+
+  \begin{itemize}
+    \item ${\bf T} = {\bf K} \oplus \Box p \to p$
+    \item ${\bf K}4 = {\bf K} \oplus \Box p \to \Box \Box p$
+    \item ${\bf D} = {\bf K} \oplus \Diamond \top$
+    \item ${\bf S}4 = {\bf K}4 \oplus \Box p \to p = {\bf T} \oplus \Box p \to \Box \Box p$
+    \item ${\bf S}5 = {\bf S}4 \oplus p \to \Box \Diamond p$
+    \item ${\bf S}4.2 = {\bf S}4 \oplus \Diamond \Box p \to \Box \Diamond p$
+  \end{itemize}
+
+Следующее утверждение легко следует из леммы о каноничности формул:
+
+\begin{lem}
+  Логики из списка выше являются каноническими
+\end{lem}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Теорема о полноте}
+
+  Имеет место следующая теорема:
+
+\begin{theor}
+  \begin{enumerate}
+    \item ${\bf T} = Log(\mathbb{F})$, где $\mathbb{F}$ --- класс всех рефлексивных шкал.
+    \item ${\bf K}4 = Log(\mathbb{F})$, где $\mathbb{F}$ --- класс всех транзитивных шкал.
+    \item ${\bf D} = Log(\mathbb{F})$, где $\mathbb{F}$ --- класс всех сериальных шкал.
+    \item ${\bf S}4 = Log(\mathbb{F})$, где $\mathbb{F}$ --- класс всех предпорядков.
+    \item ${\bf S}5 = Log(\mathbb{F})$, где $\mathbb{F}$ --- класс всех отношений эквивалентности.
+    \item ${\bf S}4.2 = Log(\mathbb{F})$, где $\mathbb{F}$ --- класс всех конфлюентных предпорядков.
+  \end{enumerate}
+\end{theor}
+
+\begin{proof}
+  Рассмотрим в качестве примера логику ${\bf S}4$
+\end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Теорема о полноте}
+  \begin{theor}
+    ${\bf S}4 = Log(\mathbb{F})$, где $\mathbb{F}$ --- класс всех предпорядков.
+  \end{theor}
+  \begin{proof}
+    Рассмотрим следующие включения:
+
+    ${\bf S}4 \subseteq Log(\mathbb{F}) \subseteq Log(\mathcal{F}_{{\bf S}4}) \subseteq {\bf S}4$
+
+    Первое включение --- это теорема корректности для ${\bf S}4$, третье включение (и, более того, равенство) следует из того факта, что ${\bf S}4$ является канонической логикой. Второе включение следует из того факта, что отношение $R_{{\bf S}4}$ является предпорядком в канонической шкале.
+  \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Пример неканонической логики}
+
+  Мы сказали, что всякая каноническая логика полна. Рассмотрим пример логики, которая полна по Крипке, но является канонической.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Н\"{e}терово отношение}
+\begin{defin}
+  Отношение $R \subseteq W \times W$ является обратно фундированным (н\"{e}теровым), если не существует бесконечных цепей $a_1 R a_2 R \dots$.
+\end{defin}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Эквивалентные определения н\"{e}теровости}
+\begin{lem}
+  Отношение $R \subseteq W \times W$ является н\"{е}теровым $\Leftrightarrow$ каждое непустое подмножество $W$ имеет $R$-максимальный элемент.
+\end{lem}
+
+\begin{proof}
+  ($\Leftarrow$) Пусть отношение $R$ не является н\"{е}теровым, тогда найдется бесконечная цепь $a_1 R a_2 R \dots$. Тогда множество $W' = \{ a_1, a_2, \dots \}$
+не будет содержать максимального элемента.
+\end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Эквивалентные определения н\"{e}теровости}
+\begin{lem}
+  Отношение $R \subseteq W \times W$ является н\"{е}теровым $\Leftrightarrow$ каждое непустое подмножество $W$ имеет $R$-максимальный элемент.
+\end{lem}
+
+WARNING: обратная импликация требует аксиомы выбора.
+
+\begin{proof}
+  ($\Rightarrow$) Пусть $W'$ не имеет максимального элемента. Пусть $a_0 \in W'$, тогда найдется $a_1$, такой, что $a_0 R a_1$. Дальше, для любого $n \in \mathbb{N}$, $a_n R a_{n + 1}$. По аксиоме выбора, можно построить последовательность $\{ a_n \}_{n \in \mathbb{N}}$, которая по отношению $R$ и образует бесконечную последовательность $a_0 R a_1 R a_2 \dots$.
+\end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Формула Л\"{е}ба}
+
+  \begin{defin}
+    Формулой Л\"{е}ба называется формула вида $\Box (\Box p \to p) \to \Box p$, или, что эквивалентно, $\Diamond p \to \Diamond (p \land \neg \Diamond p)$.
+  \end{defin}
+
+\begin{defin} Логика Г\"{е}деля-Л\"{е}ба
+  ${\bf GL} = {\bf K} + \Box (\Box p \to p) \to \Box p$
+\end{defin}
+
+Логика Г\"{е}деля-Л\"{е}ба применяется в теории доказательств, если $\Box$ понимать как доказуемость в г\"{е}делевых теориях. Смотрите:
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Н\"{e}теровость шкал}
+\begin{lem}
+  Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала Крипке, тогда
+
+\begin{itemize}
+  \item $\mathcal{F} \models \Box (\Box p \to p) \to \Box p \Leftrightarrow R \text{ транзитивно и н\"{е}терово}$
+\end{itemize}
+\end{lem}
+
+\begin{proof}
+  $(\Rightarrow)$. Покажем транзитивность.
+
+  Пусть $x, y, z \in W$ и $x R y R z$. Положим $\vartheta(p) = W \setminus \{ y, z \}$ и $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$. Тогда
+  $\mathcal{M}, x \not\models \Box p$ и $\mathcal{M}, y \not\models p$. При этом, ясно, что $\mathcal{M}, x \models \Box (\Box p \to p) \to \Box p$.
+
+  Тогда $\mathcal{M}, x \not\models \Box (\Box p \to p)$, тогда найдется $z' \in R(x)$, что $\mathcal{M}, z' \models \Box p$ и $\mathcal{M}, z' \not\models p$.
+
+  Значит, $z' = y$ или $z' = z$. Первое равенство неверно, так как $\mathcal{M}, y \not\models p$. Остается только $z$, тогда $x R z$.
+\end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Н\"{e}теровость шкал}
+\begin{lem}
+  Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала Крипке, тогда
+
+\begin{itemize}
+  \item $\mathcal{F} \models \Box (\Box p \to p) \to \Box p \Leftrightarrow R \text{ транзитивно и н\"{е}терово}$
+\end{itemize}
+\end{lem}
+
+\begin{proof}
+  $(\Rightarrow)$. Покажем н\"{e}теровость.
+
+  Пусть $W' \subseteq W$ непустое подмножество и $x \in W'$. Положим $\vartheta(p) = W \setminus W'$. Рассмотрим два случая:
+
+\begin{enumerate}
+  \item Пусть $\mathcal{M}, x \not\models \Box p$, тогда $\mathcal{M}, x \not\models \Box (\Box p \to p)$. Значит найдется $y \in R(x)$ такой,
+  что $\mathcal{M}, y \models \Box p$ и $\mathcal{M}, y \not\models p$. Тогда $y$ максимальный элемент $W'$.
+  \item Пусть $\mathcal{M}, x \models \Box p$, но $\mathcal{M}, x \not\models p$, то $x$ максимальный элемент $W'$.
+\end{enumerate}
+\end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Н\"{e}теровость шкал}
+
+  \begin{lem}
+    Пусть $\mathcal{F} = \langle W, R \rangle$ --- это шкала Крипке, тогда
+
+  \begin{itemize}
+    \item $\mathcal{F} \models \Box (\Box p \to p) \to \Box p \Leftrightarrow R \text{ транзитивно и н\"{е}терово}$
+  \end{itemize}
+\end{lem}
+
+\begin{proof}
+  $(\Leftarrow)$ Пусть $\mathcal{F}$ транзитивна и н\"{e}терова и $\vartheta$ --- это оценка. Пусть $x \in W$ и $\mathcal{M}, x \models \Diamond p$.
+  Положим $W' = \vartheta(p) \cap R(x)$, которое непусто. Пусть $y$ --- максимальный элемент $W'$, тогда $\mathcal{M}, y \models p$ и
+  $\mathcal{M}, y \not\models \Diamond p$, то есть $\mathcal{M}, y \models \neg \Diamond p$, тогда $\mathcal{M}, y \models p \land \neg \Diamond p$.
+  Откуда $\mathcal{M}, x \models \Diamond p \to \Diamond (p \land \neg \Diamond p)$.
+\end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Н\"{e}теровость шкал}
+  \begin{col}
+    \begin{enumerate}
+    \item Если $\mathcal{F} \models \Box (\Box p \to p) \to \Box p$, тогда $\mathcal{F}$ иррефлексивна, то есть $\forall x \in W \:\: \neg (x R x)$
+    \item Если $\mathcal{F} \models \Box (\Box p \to p) \to \Box p$, тогда $\mathcal{F} \not\models \Box p \to p$
+  \end{enumerate}
+  \end{col}
+
+  \begin{proof}
+    \begin{enumerate}
+    \item Пусть $\mathcal{F} \models \Box (\Box p \to p) \to \Box p$ и существует $x \in W$, такой что $x R x$. Тогда данная шкала является н\"{e}теровой.
+    С другой стороны, существует бесконечно возрастающая цепь $x R x R x \dots$, противоречие.
+    \item Очевидно.
+  \end{enumerate}
+  \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Неканоничность формулы Л\"{е}ба}
+
+  \begin{lem}
+    $\mathcal{F}_{\bf GL} \not\models \Box (\Box p \to p) \to \Box p$
+  \end{lem}
+
+  \begin{proof}
+    Положим $\Gamma = \{ \Box \phi \to \phi \: | \: \phi \in Fm \}$ и покажем, что $\Gamma$ ${\bf GL}$-непротиворечиво.
+    Предположим, что $\Gamma$ противоречиво, тогда найдутся формулы $\phi_1, \dots, \phi_n$, что ${\bf GL} \vdash \neg \land_{i = 1}^n (\Box \phi_i \to \phi_i)$,
+    откуда ${\bf GL} \vdash \lor_{i=1}^{n} (\Box \phi_i \land \neg \phi_i)$. Пусть $\mathcal{F} = \langle n + 1, < \rangle$, где $n + 1 = \{ 0, \dots, n \}$.
+    Тогда $\mathcal{F} \models \lor_{i=1}^{n} (\Box \phi_i \land \neg \phi_i)$. Эта формула состоит из $n$ дизъюнктов, тогда найдется $i \in \{ 1, \dots, n \}$,
+    что $\Box \phi_i \land \neg \phi_i$ истинно при некоторых $x, y \in n + 1$, что $x < y$. Тогда в $x$ верны $\Box \phi_i$ и $\Diamond \neg \phi_i$. Противоречие.
+  \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Селективная фильтрация}
+  \begin{defin}
+    Пусть $\mathcal{M} = \langle W, R, \vartheta \rangle$ и $\Gamma$ --- множество формул, замкнутое относительно подформул.
+    Селективной фильтрацией модели $\mathcal{M}$ по множеству формул $\Gamma$ называется модель $\mathcal{M} = \langle W', R', \vartheta' \rangle$, где
+    $W' \subseteq W$, $R' \subseteq R$ и $\vartheta'(p) = \vartheta(p) \cap W'$ для $p \in \Gamma$ со следующим условием:
+
+    \begin{itemize}
+      \item $\forall \Diamond \phi \in \Gamma \:\: \forall x \in W' \:\: \mathcal{M}, x \models \Diamond \phi \Rightarrow \exists y \in R'(x) \:\: \mathcal{M}, y \models \phi$
+    \end{itemize}
+  \end{defin}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Лемма о селективной фильтрации}
+
+    \begin{lem}
+      Пусть $\mathcal{M} = \langle W, R, \vartheta \rangle$, $\Gamma$ --- множество формул, замкнутое относительно подформул и
+      $\mathcal{M}' = \langle W', R', \vartheta' \rangle$ --- это селективная фильтрация модели $\mathcal{M}$ по $\Gamma$. Тогда:
+
+      \begin{itemize}
+        \item $\forall \phi \in \Gamma \:\: \forall x \in W' \:\: \mathcal{M}, x \models \phi \Leftrightarrow \mathcal{M}', x \models \phi$
+      \end{itemize}
+    \end{lem}
+Рассмотрим случай $\phi \eqcirc \Diamond \psi$
+    \begin{proof}
+      \begin{enumerate}
+      \item $(\Rightarrow)$ Пусть $\mathcal{M}, x \models \Diamond \psi$, тогда найдется $y \in R'(x)$, что $\mathcal{M}, y \models \psi$. $\psi \in \Gamma$, тогда
+      по предположению индукции $\mathcal{M}', y \models \psi$, откуда $\mathcal{M}', x \models \Diamond \psi$.
+      \item $(\Leftarrow)$ Пусть $\mathcal{M}', x \models \Diamond \phi$, тогда найдется $y \in R'(x)$, что $\mathcal{M}', y \models \psi$. Тогда легко видеть, что
+      $\mathcal{M}, x \models \Diamond \phi$.
+    \end{enumerate}
+    \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Полнота {\bf GL} по Крипке}
+\end{frame}
+
+\end{document}
