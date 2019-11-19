@@ -31,37 +31,38 @@
 \newtheorem{col}{Следствие}
 \title{Введение в модальную логику, \\ Лекция 2}
 \author{Даня Рогозин \\ МГУ, Serokell}
-\date{Computer Science Club}
+\date{19 октября \\ Computer Science Club \\ ПОМИ РАН}
 \begin{document}
 
 \maketitle
 
 \begin{frame}
   \frametitle{На прошлой лекции мы}
-
-\onslide<2->{
   \begin{itemize}
-    \item Определили модальный язык}
-    \onslide<3->{\item Ввели модели и шкалы Крипке}
-    \onslide<4->{\item Посмотрели на базовые операции над шкалами: порожденные подмодели/подшкалы и $p$-морфизмы}
+    \item Определили модальный язык
+    \item Ввели модели и шкалы Крипке
+    \item Ввели формулы {\bf AT}, {\bf A}4, {\bf AD}, {\bf ACR}, {\bf AB}
+    \item Определили $p$-морфизмы шкал и моделей Крипке
+    \item С помощью $p$-морфизмов показали, что иррефлексивность невыразима в модальном языке
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Нормальная модальная логика}
 
-\onslide<2->{
+\onslide<1->{
   \begin{defin}
     Множество формул $\mathcal{L}$ называется нормальной модальной логикой, если:}
-    \onslide<3->{\begin{itemize}
+    \onslide<2->{\begin{itemize}
       \item Все булевы тавтологии содержатся в $\mathcal{L}$}
-      \onslide<4->{\item В $\mathcal{L}$ содержится формула ${\bf A K}$ $\Box (p \to q) \to (\Box p \to \Box q)$}
-      \onslide<5->{\item $\mathcal{L}$ замкнуто относительно следующих правил:}
-        \onslide<6->{\begin{enumerate}
-          \item [MP] $\phi \in \mathcal{L} \: \& \: \phi \to \psi \in \mathcal{L} \Rightarrow \psi$}
-          \onslide<7->{\item [Nec] $\phi \in \mathcal{L} \Rightarrow \Box \phi \in \mathcal{L}$}
-          \onslide<8->{\item [Sub] $\phi(p) \in \mathcal{L} \Rightarrow \phi [p := \psi]$, где $\phi \in \mathcal{L}$}
+      \onslide<3->{\item В $\mathcal{L}$ содержится формула ${\bf A K}$ $\Box (p \to q) \to (\Box p \to \Box q)$}
+      \onslide<4->{\item $\mathcal{L}$ замкнуто относительно следующих правил:
+        \begin{enumerate}
+          \item [MP] $\phi \in \mathcal{L} \: \& \: \phi \to \psi \in \mathcal{L} \Rightarrow \psi \in \mathcal{L}$
+          \item [Nec] $\phi \in \mathcal{L} \Rightarrow \Box \phi \in \mathcal{L}$
+          \item [Sub] $\phi(p) \in \mathcal{L} \Rightarrow \phi [p := \psi]$, где $\psi \in Fm$
         \end{enumerate}
+        }
     \end{itemize}
   \end{defin}
 \end{frame}
@@ -70,21 +71,20 @@
   \frametitle{Теорема корректности}
 
   \begin{theor}
-    Пусть $\mathcal{F} = \langle W, R \rangle$, тогда $Log(\mathcal{F})$ --- это нормальная модальная логика
+    Пусть $\mathcal{F} = \langle W, R \rangle$, тогда $\operatorname{Log}(\mathcal{F})$ --- это нормальная модальная логика
   \end{theor}
 
 \onslide<2->{
-Общезначимость тавтологий и замкнутность $Log(\mathcal{F})$ относительно ${\bf MP}$ очевидна.}
-\onslide<3->{Покажем, что в произвольной шкале общезначима формула ${A K}$}
+Общезначимость тавтологий и замкнутность $\operatorname{Log}(\mathcal{F})$ относительно ${\bf MP}$ очевидна. Покажем, что в произвольной шкале общезначима формула ${\bf AK}$}
 
-\onslide<4->{
+\onslide<3->{
   \begin{proof}
     Пусть $\vartheta : \mathbb{V} \to 2^W$ --- это оценка и пусть
-    $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$ --- это модель на шкале $\mathcal{F}$.} \onslide<5->{
+    $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$ --- это модель на шкале $\mathcal{F}$.
     Предположим, что для
-    для любого $w \in W$, если $\mathcal{M}, w \models \Box (p \to q)$ и $\mathcal{M}, w \models \Box p$.}
-\onslide<6->{Тогда для любого $v \in R(w)$, $\mathcal{M}, v \models p \to q$ и $\mathcal{M}, v \models p$.}
-\onslide<7->{Отсюда, $\mathcal{M}, v \models q$. Тогда и $\mathcal{M}, w \models \Box q$.}
+    для любого $w \in W$, если $\mathcal{M}, w \models \Box (p \to q)$ и $\mathcal{M}, w \models \Box p$.
+    Тогда для любого $v \in R(w)$, $\mathcal{M}, v \models p \to q$ и $\mathcal{M}, v \models p$.
+    Отсюда, $\mathcal{M}, v \models q$. Тогда и $\mathcal{M}, w \models \Box q$.}
   \end{proof}
 \end{frame}
 
@@ -92,15 +92,14 @@
   \frametitle{Теорема корректности}
 
   \begin{theor}
-    Пусть $\mathcal{F} = \langle W, R \rangle$, тогда $Log(\mathcal{F})$ --- это нормальная модальная логика
+    Пусть $\mathcal{F} = \langle W, R \rangle$, тогда $\operatorname{Log}(\mathcal{F})$ --- это нормальная модальная логика
   \end{theor}
 
-\onslide<2->{
-Покажем, $Log(\mathcal{F})$ замкнута относительно правила Nec.}
+\onslide<1->{
+Покажем, $\operatorname{Log}(\mathcal{F})$ замкнута относительно правила Nec.}
 
-\onslide<3->{\begin{proof}
-    Пусть $\mathcal{F} \models \phi$.} \onslide<4->{Тогда при любой оценке $\vartheta$ и при любой модели $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$, для любого $x \in W$, $\mathcal{M}, x \models \phi$.}
-\onslide<5->{Легко понять, что $\mathcal{M}, x \models \Box \phi$.}
+\onslide<2->{\begin{proof}
+    Пусть $\mathcal{F} \models \phi$. Тогда при любой оценке $\vartheta$ и при любой модели $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$, для любого $x \in W$, $\mathcal{M}, x \models \phi$. Легко понять, что $\mathcal{M}, x \models \Box \phi$.}
 \end{proof}
 \end{frame}
 
@@ -108,48 +107,45 @@
   \frametitle{Теорема корректности}
 
   \begin{theor}
-    Пусть $\mathcal{F} = \langle W, R \rangle$, тогда $Log(\mathcal{F})$ --- это нормальная модальная логика
+    Пусть $\mathcal{F} = \langle W, R \rangle$, тогда $\operatorname{Log}(\mathcal{F})$ --- это нормальная модальная логика
   \end{theor}
 
+\onslide<1->{
+  Покажем, $\operatorname{Log}(\mathcal{F})$ замкнута относительно правила Sub. Для этого введем оценку формулы $|| \phi ||_{\mathcal{M}} = \{ x \in W \: | \: \mathcal{M}, x \models \phi \}$, где $\mathcal{M}$ --- это модель.}
+
 \onslide<2->{
-  Покажем, $Log(\mathcal{F})$ замкнута относительно правила Sub.}
-\onslide<3->{Для этого введем оценку формулы $|| \phi ||_{\mathcal{M}} = \{ x \in W \: | \: \mathcal{M}, x \models \phi \}$, где $\mathcal{M}$ --- это модель.}
-
-\onslide<4->{
 \begin{proof}
-  Пусть $\mathcal{F} \models \phi(p)$, $\phi$ --- это модальная формула и $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$ --- модель.}
-  \onslide<5->{Посмотрим модель $\mathcal{M}^{'} = \langle \mathcal{F}, \vartheta' \rangle$, такую что $\vartheta'(p) = ||\psi||_{\mathcal{M}}$.} \onslide<6->{Несложной индукцией по $\phi$ можно установить следующую эквивалентность:}
+  Пусть $\mathcal{F} \models \phi(p)$, $\psi$ --- это модальная формула и $\mathcal{M} = \langle \mathcal{F}, \vartheta \rangle$ --- модель. Посмотрим модель $\mathcal{M}^{'} = \langle \mathcal{F}, \vartheta' \rangle$, такую что $\vartheta'(p) = ||\psi||_{\mathcal{M}}$.} \onslide<3->{Несложной индукцией по $\phi$ можно установить следующую эквивалентность:
 
-    \onslide<7->{$\mathcal{M}, x \models \phi [x := \psi] \Leftrightarrow \mathcal{M}', x \models \phi(p)$}
+  $\mathcal{M}, x \models \phi [x := \psi] \Leftrightarrow \mathcal{M}', x \models \phi(p)$}
 \end{proof}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Теорема корректности}
+  \frametitle{Теорема корректности относительно класса шкал}
 
+\onslide<1->{
 \begin{col}
-  Пусть $\mathbb{F}$ --- это класс шкал Крипке, тогда $Log(\mathbb{F})$ --- это нормальная модальная логика
+  Пусть $\mathbb{F}$ --- это класс шкал Крипке, тогда $\operatorname{Log}(\mathbb{F})$ --- это нормальная модальная логика
 \end{col}
-
+}
+\onslide<2->{
 \begin{proof}
-  \onslide<2->{По определению, $Log(\mathbb{F}) = \bigcap \limits_{\mathcal{F} \in \mathbb{F}} Log(\mathcal{F})$.}
-  \onslide<3->{По теореме корректности, для каждого $\mathcal{F} \in \mathbb{F}$, $Log(\mathcal{F})$ --- нормальная модальная логика.}
-  \onslide<4->{Тогда в каждом множестве $Log(\mathcal{F})$ содержатся булевы тавтологии, аксиома нормальности, и оно замкнуто относительно трех правил.}
+  По определению, $\operatorname{Log}(\mathbb{F}) = \bigcap \limits_{\mathcal{F} \in \mathbb{F}} \operatorname{Log}(\mathcal{F})$. По теореме корректности, для каждого $\mathcal{F} \in \mathbb{F}$, $\operatorname{Log}(\mathcal{F})$ --- нормальная модальная логика. Тогда в каждом множестве $\operatorname{Log}(\mathcal{F})$ содержатся булевы тавтологии, аксиома нормальности, и оно замкнуто относительно трех правил.}
 \end{proof}
 \end{frame}
 
 \begin{frame}
   \frametitle{Минимальная нормальная модальная логика}
 
-\onslide<2->{
+\onslide<1->{
   \begin{defin}
     Минимальная нормальная модальная логика ${\bf K}$ задается следующими аксиомами и правилами вывода
-}
-\onslide<3->
-  {\begin{enumerate}
-    \item Аксиомы классической логики высказываний (см. любой учебник по математической логике)}
-    \onslide<4->{\item Аксиома нормальности (или аксиома Крипке) $\Box (p \to q) \to (\Box p \to \Box q)$}
-    \onslide<5->{\item Правила вывода:
+
+\begin{enumerate}
+    \item Аксиомы классической логики высказываний (см. любой учебник по математической логике)
+    \item Аксиома нормальности (или аксиома Крипке) $\Box (p \to q) \to (\Box p \to \Box q)$
+    \item Правила вывода:
 
     \begin{minipage}{0.225\textwidth}
     \begin{prooftree}
@@ -177,7 +173,7 @@
   \end{defin}
   }
 
-\onslide<6->{
+\onslide<2->{
   \emph{Выводом} в минимальной нормальной модальной логике ${\bf K}$ называется конечная последовательность формул, каждая из которых либо аксиома, либо получена из предыдущих формул по правилам ${\bf MP}$, ${\bf Nec}$, ${\bf Sub}$}
 \end{frame}
 
@@ -229,40 +225,39 @@ $ $
 \begin{frame}
   \frametitle{Полнота по Крипке}
 
-\onslide<2->{
+\onslide<1->{
   \begin{defin}
-    Нормальная модальная логика $\mathcal{L}$ полна по Крипке, если она является логикой некоторого класса шкал. То есть, существует класс $\mathcal{F}$, такой, что
-    $\mathcal{L} = Log(\mathcal{F})$.
+    Нормальная модальная логика $\mathcal{L}$ полна по Крипке, если она является логикой некоторого класса шкал. То есть, существует класс $\mathbb{F}$, такой, что
+    $\mathcal{L} = \operatorname{Log}(\mathbb{F})$.
   \end{defin}
 }
-\onslide<3->{
-  Покажем, что логика ${\bf K}$ является логикой класса всех шкал:
-}
-\onslide<4->{
-  \begin{theorem}
-    ${\bf K} = Log(\mathcal{F})$, где $\mathcal{F}$ --- это класс всех шкал Крипке.
-  \end{theorem}
+\onslide<2->{
+  Следующая цель: теорема о полноте для минимальной нормальной модальной логики
+  \begin{theor}
+    Пусть $\mathbb{F}$ --- это класс всех шкал Крипке, тогда ${\bf K} = \operatorname{Log}(\mathbb{F})$.
+  \end{theor}
 }
 \end{frame}
 
 \begin{frame}
   \frametitle{(Максимально) непротиворечивые множества}
 
-\onslide<2->{
+\onslide<1->{
   \begin{defin}
-    Пусть $\mathcal{L}$ --- это нормальная модальная логика.} \onslide<3->{Множество формул $\Gamma$ $\mathcal{L}$-противоречиво, если найдутся формулы
-    $\phi_1, \dots, \phi_n \in \Gamma$, такие, что $\mathcal{L} \vdash \neg \bigwedge \limits_{i = 1}^n \phi_i$.} \onslide<4->{В противном случае,
+    Пусть $\mathcal{L}$ --- это нормальная модальная логика. Множество формул $\Gamma$ $\mathcal{L}$-противоречиво, если найдутся формулы
+    $\phi_1, \dots, \phi_n \in \Gamma$, такие, что $\neg \bigwedge \limits_{i = 1}^n \phi_i \in \mathcal{L}$. В противном случае,
     $\Gamma$ $\mathcal{L}$-непротиворечиво.}
   \end{defin}
 
-\onslide<5->{
+\onslide<2->{
   \begin{defin}
-    Множество $\Gamma$ максимально непротиворечиво, если (следующие условия эквивалентны):}
-    \onslide<6->{\begin{enumerate}
-      \item Для любого максимально непротиворечивого $\Sigma$, если $\Gamma \subseteq \Sigma$, то $\Gamma = \Sigma$.}
-    \onslide<7->{\item Для любой формулы $\phi$, либо $\phi \in \Gamma$, либо $\neg \phi \in \Gamma$}
+    Множество $\Gamma$ максимально непротиворечиво, если (следующие условия эквивалентны):
+    \begin{enumerate}
+      \item Для любого максимально непротиворечивого $\Sigma$, если $\Gamma \subseteq \Sigma$, то $\Gamma = \Sigma$.
+      \item Для любой формулы $\phi$, либо $\phi \in \Gamma$, либо $\neg \phi \in \Gamma$
     \end{enumerate}
   \end{defin}
+  }
 \end{frame}
 
 \begin{frame}
@@ -278,7 +273,7 @@ $ $
   \begin{proof}
     Предположим, что оба множества $\mathcal{L}$-противоречивы.} \onslide<4->{Тогда найдутся $\phi_1, \dots, \phi_n, \phi \in \Gamma \cup \{ \phi \}$ и
     $\psi_1, \dots, \psi_m, \neg \phi \in \Gamma \cup \{ \neg \phi \}$.} \onslide<5->{Рассмотрим формулу
-    $A = \bigwedge \limits_{i = 1}^n \phi_i \land \bigwedge \limits_{j = 1}^m \phi_j$.} \onslide<6->{Тогда $\mathcal{L} \vdash \neg (A \land \phi)$ и
+    $A = \bigwedge \limits_{i = 1}^n \phi_i \land \bigwedge \limits_{j = 1}^m \psi_j$.} \onslide<6->{Тогда $\mathcal{L} \vdash \neg (A \land \phi)$ и
     $\mathcal{L} \vdash \neg (A \land \neg \phi)$. Тогда $\mathcal{L} \vdash \neg A$.} \onslide<7->{Противоречие, так как $\Gamma$ непротиворечиво.}
   \end{proof}
 \end{frame}
@@ -292,37 +287,37 @@ $ $
 
 \onslide<2->{
   \begin{proof}
-    Пусть $\phi_1, \phi_2, \dots$ все формулы.} \onslide<3->{Определим индукцией cледующее семейство множеств:}
+    Пусть $\phi_1, \phi_2, \dots$ все формулы. Определим индукцией cледующее семейство множеств:}
 
-\onslide<4->{
+\onslide<3->{
     $\begin{cases} \Gamma_0 = \Gamma \\ \Gamma_{n + 1} = \Gamma_{n} \cup \{ \phi_{n}\}, \text{если $\Gamma_{n} \cup \{ \phi_{n}\}$ $\mathcal{L}$-непротиворечиво}
     \\ \Gamma_{n + 1} = \Gamma_{n} \cup \{ \neg \phi_{n}\}, \text{иначе} \end{cases}$.
 }
-\onslide<5->{
-    По лемме о пополнении, каждое $\Gamma_{n}$ $\mathcal{L}$-непротиворечиво.} \onslide<6->{Положим $\Delta = \cup_{n = 0}^{\infty} \Gamma_n$.
-    Для каждого $n$, либо $\phi_n \in \Gamma_{n + 1}$, либо $\neg \phi_n \in \Gamma_{n + 1}$, а значит, и в $\Delta$. Тогда $\Delta$ максимально и непротиворечиво.
-    }
+
+\onslide<4->{
+    По лемме о пополнении, каждое $\Gamma_{n}$ $\mathcal{L}$-непротиворечиво. Положим $\Delta = \cup_{n = 0}^{\infty} \Gamma_n$.}
+    \onslide<5->{Для каждого $n$, либо $\phi_n \in \Gamma_{n + 1}$, либо $\neg \phi_n \in \Gamma_{n + 1}$, а значит, и в $\Delta$. Тогда $\Delta$ максимально и непротиворечиво.}
   \end{proof}
 \end{frame}
 
 \begin{frame}
   \frametitle{Лемма о максимально непротиворечивых множествах}
 
-\onslide<2->{
+\onslide<1->{
   \begin{lem}
-    Пусть $\Gamma$ максимальное $\mathcal{L}$-непротиворечивое множество, тогда:}
-    \onslide<3->{\begin{itemize}
-      \item $\mathcal{L} \subseteq \Gamma$}
-    \onslide<4->{\item $\neg \phi \in \Gamma \Leftrightarrow A \notin \Gamma$}
-    \onslide<5->{\item $\phi \land \psi \in \Gamma \Leftrightarrow \phi \in \Gamma \text{ и } \psi \in \Gamma$}
-    \onslide<6->{\item $\phi \lor \psi \in \Gamma \Leftrightarrow \phi \in \Gamma \text{ или } \psi \in \Gamma$}
+    Пусть $\Gamma$ максимальное $\mathcal{L}$-непротиворечивое множество, тогда:
+    \begin{itemize}
+      \item $\mathcal{L} \subseteq \Gamma$
+      \item $\neg \phi \in \Gamma \Leftrightarrow A \notin \Gamma$
+      \item $\phi \land \psi \in \Gamma \Leftrightarrow \phi \in \Gamma \text{ и } \psi \in \Gamma$
+      \item $\phi \lor \psi \in \Gamma \Leftrightarrow \phi \in \Gamma \text{ или } \psi \in \Gamma$}
     \end{itemize}
   \end{lem}
-\onslide<7->{Разберем для примера пункт 3.}
-\onslide<8->{\begin{proof}
-    ($\Rightarrow$) Пусть $\phi \land \psi \in \Gamma$ и при этом $\phi \notin \Gamma$ и $\psi \notin \Gamma$.}
-    \onslide<9->{Тогда $\neg \phi \in \Gamma$ и $\neg  \psi \in \Gamma$.}
-    \onslide<10->{Тогда $\Gamma$ противоречиво, ибо $\neg ((\neg \phi \land \neg \psi) \land (\phi \lor \psi)) \in \mathcal{L}$, будучи тавтологией.}
+\onslide<2->{Разберем для примера пункт 4.}
+\onslide<3->{\begin{proof}
+    ($\Rightarrow$) Пусть $\phi \lor \psi \in \Gamma$ и при этом $\phi \notin \Gamma$ и $\psi \notin \Gamma$.
+    Тогда $\neg \phi \in \Gamma$ и $\neg \psi \in \Gamma$.
+    Тогда $\Gamma$ противоречиво, ибо $\neg ((\neg \phi \land \neg \psi) \land (\phi \lor \psi)) \in \mathcal{L}$, что тавтология, и при этом $(\neg \phi \land \neg \psi) \land (\phi \lor \psi) \in \Gamma$.}
   \end{proof}
 \end{frame}
 
@@ -338,31 +333,32 @@ $ $
       \item $\phi \lor \psi \in \Gamma \Leftrightarrow \phi \in \Gamma \text{ или } \psi \in \Gamma$
     \end{itemize}
   \end{lem}
-    Разберем для примера пункт 3.
+    Разберем для примера пункт 4.
   \begin{proof}
-    \onslide<2->{($\Leftarrow$) Пусть $\phi \in \Gamma$ или $\psi \in \Gamma$, при этом $\phi \lor \psi \notin \Gamma$.} \onslide<3->{Тогда $\neg (\phi \land \neg (\phi \lor \psi)) \in \mathcal{L}$}
+    \onslide<2->{($\Leftarrow$) Пусть $\phi \in \Gamma$ или $\psi \in \Gamma$, при этом $\phi \lor \psi \notin \Gamma$.
+    Тогда $\neg (\phi \lor \psi) \in \Gamma$. Откуда $\phi \land \neg (\phi \lor \psi) \in \Gamma$. С другой стороны, $\neg (\phi \land \neg (\phi \lor \psi)) \in \mathcal{L}$, будучи тавтологией.}
   \end{proof}
 \end{frame}
 
 \begin{frame}
   \frametitle{Каноническая шкала и каноническая модель}
 
-\onslide<2->{
-  \begin{defin} Пусть $\mathcal{L}$ --- это нормальная модальная логика.} \onslide<3->{Канонической шкалой логики $\mathcal{L}$ называется шкала
+\onslide<1->{
+  \begin{defin} Пусть $\mathcal{L}$ --- это нормальная модальная логика.} \onslide<2->{Канонической шкалой логики $\mathcal{L}$ называется шкала
     $\mathcal{F}_{\mathcal{L}} = \langle W_{\mathcal{L}}, R_{\mathcal{L}}\rangle$, где}
-    \onslide<4->{\begin{itemize}
+    \onslide<3->{\begin{itemize}
       \item $W_{\mathcal{L}}$ --- это множество всех максимальных $\mathcal{L}$-непротиворечивых множеств.}
-    \onslide<5->{\item $x R_{\mathcal{L}} y \Leftrightarrow_{def} \forall \phi \in x \:\: \phi \eqcirc \Box \psi \Rightarrow \psi \in y$}
+    \onslide<4->{\item $\Gamma R_{\mathcal{L}} \Delta \Leftrightarrow_{def} \forall \phi \:\: \Box \phi \in \Gamma \Rightarrow \psi \in \Delta$}
     \end{itemize}
   \end{defin}
 
-\onslide<6->{
+\onslide<5->{
   \begin{defin}
     Каноническая модель --- это модель $\mathcal{M}_{\mathcal{L}} = \langle \mathcal{F}_{\mathcal{L}}, \vartheta_{\mathcal{L}} \rangle$,
     где $\vartheta_{\mathcal{L}}$ --- это каноническая оценка, заданная как
 
     \begin{center}
-      $\vartheta_{\mathcal{L}}(p) =_{def} \{ x \in W_{\mathcal{L}} \: | \: p \in W_{\mathcal{L}} \}$
+      $\vartheta_{\mathcal{L}}(p) =_{def} \{ \Gamma \in W_{\mathcal{L}} \: | \: p \in \Gamma \}$
     \end{center}
   \end{defin}
 }
@@ -380,13 +376,13 @@ $ $
 \onslide<3->{
   \begin{proof}
     $\begin{array}{lll}
-    & \mathcal{M}_{\mathcal{L}}, \Gamma \models \Box \psi \Leftrightarrow & \\
-    & \:\:\:\: \text{По определению}& \\}
-    \onslide<4->{& \forall \Delta \in W_{\mathcal{L}} \:\: \Gamma R_{\mathcal{L}} \Delta \Rightarrow \mathcal{M}_{\mathcal{L}}, \Delta \models \psi \Leftrightarrow & \\
-    & \:\:\:\: \text{По предположению индукции}& \\}
-    \onslide<5->{& \forall \Delta \in W_{\mathcal{L}} \:\: \Gamma R_{\mathcal{L}} \Delta \Rightarrow \psi \in \Delta \Leftrightarrow & \\
-    & \:\:\:\: \text{Это надо доказать}& \\}
-    \onslide<6->{& \Box \psi \in \Gamma&}
+    & \mathcal{M}_{\mathcal{L}}, \Gamma \models \Box \psi \Leftrightarrow & \\}
+    \onslide<4->{& \:\:\:\: \text{По определению}& \\
+    & \forall \Delta \in W_{\mathcal{L}} \:\: \Gamma R_{\mathcal{L}} \Delta \Rightarrow \mathcal{M}_{\mathcal{L}}, \Delta \models \psi \Leftrightarrow & \\}
+    \onslide<5->{& \:\:\:\: \text{По предположению индукции}& \\
+    & \forall \Delta \in W_{\mathcal{L}} \:\: \Gamma R_{\mathcal{L}} \Delta \Rightarrow \psi \in \Delta \Leftrightarrow & \\}
+    \onslide<6->{& \:\:\:\: \text{Это надо доказать}& \\
+    & \Box \psi \in \Gamma&}
     \end{array}$
   \end{proof}
 \end{frame}
@@ -404,76 +400,94 @@ $ $
     $(\Leftarrow)$ следует из определения $R_{\mathcal{L}}$.} \onslide<4->{Покажем $(\Rightarrow)$.}
 
     \onslide<5->{Пусть $\Box \psi \notin \Gamma$.} \onslide<6->{Построим $\Theta$, такое, что $\Gamma R_{\mathcal{L}} \Theta$ и $\psi \notin \Theta$.}
-    \onslide<6->{Положим $\Theta = \{ \theta \: | \: \Box \theta \in \Gamma \} \cup \{ \neg \psi \}$.} \onslide<7->{Предположим, $\Theta$ противоречиво.}
-    \onslide<7->{Тогда существуют $\theta_1, \dots, \theta_n, \neg \psi$, такие что $\neg (\land_{i=1}^{n} \theta_i \land \neg \psi) \in \mathcal{L}$.}
+    \onslide<6->{Положим $\Psi = \{ \theta \: | \: \Box \theta \in \Gamma \} \cup \{ \neg \psi \}$.} \onslide<7->{Покажем, что $\Psi$ непротиворечиво.}
+    \onslide<8->{Предположим противное.}
+    \onslide<9->{Тогда существуют $\theta_1, \dots, \theta_n$, такие что $\neg (\land_{i=1}^{n} \theta_i \land \neg \psi) \in \mathcal{L}$, где $\theta_i$ такие, что $\Box \theta_i \in \Gamma$.}
 
   \end{proof}
 \end{frame}
 
 \begin{frame}
   \frametitle{Лемма о канонической модели}
-  \onslide<2->{
   \begin{lem}
-    \begin{enumerate}
-    \item $\mathcal{M}_{\mathcal{L}}, \Gamma \models \phi \Leftrightarrow \phi \in \Gamma$}
-    \onslide<3->{\item $\mathcal{M}_{\mathcal{L}} \models \phi \Leftrightarrow \phi \in \mathcal{L}$}
-  \end{enumerate}
+    $\mathcal{M}_{\mathcal{L}}, \Gamma \models \phi \Leftrightarrow \phi \in \Gamma$
   \end{lem}
 
-  \onslide<4->{Покажем, что $\forall \Delta \in W_{\mathcal{L}} \:\: \Gamma R_{\mathcal{L}} \Delta \Rightarrow \psi \in \Delta \Leftrightarrow \Box \psi \in \Gamma$}
+Покажем, что $\forall \Delta \in W_{\mathcal{L}} \:\: \Gamma R_{\mathcal{L}} \Delta \Rightarrow \psi \in \Delta \Leftrightarrow \Box \psi \in \Gamma$
 
-\onslide<5->{
+\onslide<2->{
   \begin{proof}
     $\begin{array}{lll}
-    & \mathcal{L} \vdash \neg (\land_{i=1}^{n} \theta_i \land \neg \psi) & \\
-    & \:\:\:\: \text{Эквивалентность из классической логики} & \\}
-    \onslide<6->{ & \mathcal{L} \vdash \land_{i=1}^{n} \theta_i \to \psi & \\
-    & \:\:\:\: \text{{\bf Nec} + {\bf MP} + \text{ пример вывода в ${\bf K}$}} & \\}
-    \onslide<7->{ & \mathcal{L} \vdash \land_{i=1}^{n} \Box \theta_i \to \Box \psi & \\}
+    & \mathcal{L} \vdash \neg (\land_{i=1}^{n} \theta_i \land \neg \psi) & \\}
+    \onslide<3->{ & \:\:\:\: \text{Эквивалентность из классической логики} & \\
+    & \mathcal{L} \vdash \land_{i=1}^{n} \theta_i \to \psi & \\}
+    \onslide<4->{& \:\:\:\: \text{{\bf Nec} + {\bf MP} + \text{ пример вывода в ${\bf K}$}} & \\
+    & \mathcal{L} \vdash \land_{i=1}^{n} \Box \theta_i \to \Box \psi & \\}
     \end{array}$
-  \end{proof}
 
-\onslide<8->{
-  Ясно, что $\land_{i=1}^{n} \Box \theta_i \to \Box \psi \in \Gamma$ и $\land_{i=1}^{n} \Box \theta_i \in \Gamma$ по лемме о максимальных непротиворечивых
-  множествах. Тогда $\Box \psi \in \Gamma$.} \onslide<9->{Противоречие.}
+    \onslide<5->{
+      Ясно, что $\land_{i=1}^{n} \Box \theta_i \to \Box \psi \in \Gamma$, так как $\land_{i=1}^{n} \Box \theta_i \in \Gamma$ по лемме о максимальных непротиворечивых
+      множествах. Тогда $\Box \psi \in \Gamma$. Противоречие.}
+  \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Теорема о канонической модели}
+
+\onslide<1->{
+  \begin{theor}
+    $\phi \in \mathcal{L} \Leftrightarrow \mathcal{M}_{\mathcal{L}} \models \phi$
+  \end{theor}
+}
+
+\onslide<2->{
+  \begin{proof}
+    \begin{enumerate}
+    \item $(\Rightarrow)$ Если $\phi \in \mathcal{L}$, тогда для каждого максимального $\mathcal{L}$-непротиворечивого $\Gamma$, $\phi \in \Gamma$.
+    По лемме о канонической модели, $\mathcal{M}_{\mathcal{L}}, \Gamma \models \phi$. Тогда $\mathcal{M}_{\mathcal{L}} \models \phi$.}
+\onslide<3->{
+    \item $(\Leftarrow)$ Пусть $\phi \notin \mathcal{L}$, тогда $\{ \neg \phi \}$ непротиворечиво.} \onslide<4->{Тогда, по лемме Линденбаума, найдется максимальное $\mathcal{L}$-непротиворечивое множество $\Gamma$, что $\{ \neg \phi \} \subseteq \Gamma$.}
+    \onslide<5->{Тогда $\neg \phi \in \Gamma$.} \onslide<6->{По лемме о канонической модели,
+    $\mathcal{M}_{\mathcal{L}}, \Gamma \models \neg \phi$.} \onslide<7->{Тогда $\mathcal{M}_{\mathcal{L}}, \Gamma \nvDash \phi$.}
+  \end{enumerate}
+  \end{proof}
 \end{frame}
 
 \begin{frame}
   \frametitle{Полнота системы ${\bf K}$}
 
-\onslide<2->{
+\onslide<1->{
   \begin{col}
-    $Log(\mathcal{F}_{\mathcal{L}}) \subseteq \mathcal{L}$
+    $\operatorname{Log}(\mathcal{F}_{\mathcal{L}}) \subseteq \mathcal{L}$
   \end{col}
 }
 
-\onslide<3->{
+\onslide<2->{
   \begin{theor}
-      ${\bf K} = Log(\mathcal{F})$, где $\mathcal{F}$ --- это класс всех шкал Крипке.
+      ${\bf K} = \operatorname{Log}(\mathcal{F})$, где $\mathcal{F}$ --- это класс всех шкал Крипке.
   \end{theor}
 }
 
-\onslide<4->{
+\onslide<3->{
   \begin{proof} Рассмотрим следующую цепочку включений:
 
-    ${\bf K} \subseteq Log(\mathcal{F}) \subseteq Log(\mathcal{F}_{\bf K}) \subseteq {\bf K}$
+    ${\bf K} \subseteq \operatorname{Log}(\mathbb{F}) \subseteq \operatorname{Log}(\mathcal{F}_{\bf K}) \subseteq {\bf K}$
     }
 
-\onslide<5->{
-    Первое включение --- это теорема корректности; второе включение следует из определения логики класса шкал ;третье включение --- это следствие выше.
-    }
+\onslide<4->{
+    Первое включение --- это теорема корректности; второе включение следует из определения логики класса шкал; третье включение --- это следствие выше.}
   \end{proof}
 \end{frame}
 
 \begin{frame}
   \frametitle{На следующей лекции мы}
 
-\onslide<2->{
+\onslide<1->{
   \begin{enumerate}
     \item Рассмотрим примеры модальных формул, охарактеризуем соответствующие им свойства шкал и опишем стандартный "зоопарк"
     модальных логик: системы ${\bf T}$, ${\bf K4}$, ${\bf S}4$, ${\bf S}5$, ${\bf D}$, ${\bf GL}$ и так далее.}
-    \onslide<3->{\item Дадим понятие канонической логики и рассмотрим примеры канонических логик.}
-    \onslide<4->{\item Обсудим подробнее логику Геделя-Леба ${\bf GL}$, ее связь с теорией доказательств, ее неканоничность и покажем, что она полна по Крипке.}
+    \onslide<2->{\item Дадим понятие канонической логики и рассмотрим примеры канонических логик.}
+    \onslide<3->{\item Обсудим подробнее логику Г\"{е}деля-Л\"{е}ба ${\bf GL}$, ее связь с теорией доказательств, ее неканоничность и покажем, что она полна по Крипке.}
   \end{enumerate}
 \end{frame}
 
